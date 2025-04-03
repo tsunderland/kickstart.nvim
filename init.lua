@@ -168,9 +168,9 @@ vim.opt.confirm = true
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', 'jk', '<Esc>', { noremap = true, silent = true })
 
--- Clear highlights on search when pressing <Esc> in normal mode
+-- Clear highlights on search when pressing uu in normal mode
 --  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', 'uu', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -990,12 +990,25 @@ require('lazy').setup({
   -- place them in the correct locations.
 
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  {
+    'klen/nvim-config-local',
+    config = function()
+      require('config-local').setup {
+        config_files = { '.nvim.lua', '.nvimrc' }, -- Files to look for
+        hashfile = vim.fn.stdpath 'data' .. '/config-local', -- Store trusted files
+        autocommands_create = true,
+        commands_create = true,
+        silent = false,
+        lookup_parents = true,
+      }
+    end
+  },
   --
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
